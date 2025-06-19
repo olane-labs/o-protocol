@@ -1,10 +1,11 @@
 {
-  "name": "@olane/o-protocol-specification",
+  "name": "@olane/o-protocol",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "oLane Protocol specification and protocol schema",
   "license": "MIT",
   "author": "oLane Inc. (https://olane.com)",
+  "main": "schema/v1.0.0/schema.ts",
   "engines": {
     "node": ">=20"
   },
