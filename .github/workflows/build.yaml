@@ -13,10 +13,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
   publish:
     runs-on: ubuntu-latest
     if: github.event_name == 'release'
     environment: release
+    needs: build
 
     permissions:
       contents: read
