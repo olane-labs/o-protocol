@@ -1,13 +1,26 @@
+name: oLane Protocol Release
+
 on:
   push:
     branches:
       - main
-
   pull_request:
+  release:
+    types: [published]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  validate:
+  publish:
     runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    environment: release
+
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - uses: actions/checkout@v4
@@ -15,11 +28,8 @@ jobs:
         with:
           node-version: 20
           cache: npm
+          registry-url: 'https://registry.npmjs.org'
 
-      - run: npm ci
-
-      - name: Check TypeScript definitions
-        run: npm run check:schema:ts
-
-      - name: Verify that `npm run generate:json` did not change outputs (if it did, please re-run it and re-commit!)
-        run: npm run check:schema:json
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
