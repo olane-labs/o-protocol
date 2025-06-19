@@ -1,9 +1,25 @@
-export const LATEST_PROTOCOL_VERSION = '1.0.0';
-
 export interface oAddress {
   transports: string[];
   protocol: string;
 }
+
+
+
+
+export interface oHandshakeRequest extends JSONRPCRequest {
+  method: oProtocolMethods.HANDSHAKE;
+  params: RequestParams & {
+    address: string;
+  };
+}
+
+export interface oHandshakeResponse extends JSONRPCResponse {
+  result: {
+    dependencies: oDependency[];
+    parameters: any;
+  };
+}
+
 export interface oDependency {
   address: string;
   version: string;
@@ -17,20 +33,19 @@ export enum oProtocolMethods {
   ROUTE = 'route',
 }
 
-export interface oHandshakeRequest extends JSONRPCRequest {
-  method: oProtocolMethods.HANDSHAKE;
-  params: {
+
+
+export interface oRouterRequest extends JSONRPCRequest {
+  method: oProtocolMethods.ROUTE;
+  params: RequestParams & {
     address: string;
+    payload: {
+      [key: string]: unknown;
+    };
   };
 }
 
-export interface oHandshakeResponse extends JSONRPCResponse {
-  result: {
-    dependencies: oDependency[];
-    parameters: any;
-  };
-}
-export const JSONRPC_VERSION = '2.0';
+export const JSONRPC_VERSION = "2.0";
 
 export type ConnectionId = string;
 
@@ -39,16 +54,14 @@ export type ConnectionId = string;
  */
 export type Cursor = string;
 
+export interface RequestParams {
+  _connectionId: ConnectionId;
+  [key: string]: unknown;
+}
+
 export interface Request {
   method: string;
-  params?: {
-
-    _meta?: {
-      connectionId?: ConnectionId;
-      [key: string]: unknown;
-    };
-    [key: string]: unknown;
-  };
+  params?: RequestParams;
 }
 
 export interface Notification {
@@ -63,7 +76,6 @@ export interface Result {
   _meta?: { [key: string]: unknown };
   [key: string]: unknown;
 }
-
 
 /**
  * A uniquely identifying ID for a request in JSON-RPC.
@@ -93,7 +105,6 @@ export interface JSONRPCResponse {
   id: RequestId;
   result: Result;
 }
-
 
 // Standard JSON-RPC error codes
 export const PARSE_ERROR = -32700;
@@ -130,15 +141,23 @@ export interface JSONRPCError {
  */
 export type EmptyResult = Result;
 
-export interface RouterRequest extends JSONRPCRequest {
-  method: oProtocolMethods.ROUTE;
-  params: {
-    _meta: {
-      connectionId?: ConnectionId;
-    };
-    address: string;
-    payload: {
-      [key: string]: unknown;
-    };
-  };
+export interface oRequest extends JSONRPCRequest {}
+export interface oResponse extends JSONRPCResponse {}
+
+export const LATEST_PROTOCOL_VERSION = '1.0.0';
+
+
+
+
+export interface oRegistrationParams extends RequestParams {
+  transports: string[];
+  peerId: string;
+  protocols?: string[];
+  ttl?: number;
 }
+
+export interface oRegisterRequest extends oRequest {
+  method: oProtocolMethods.REGISTER;
+  params: oRegistrationParams;
+}
+
