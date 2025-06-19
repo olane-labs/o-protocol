@@ -1,4 +1,4 @@
-export const JSONRPC_VERSION = '2.0';
+export const JSONRPC_VERSION = "2.0";
 
 export type ConnectionId = string;
 
@@ -7,16 +7,14 @@ export type ConnectionId = string;
  */
 export type Cursor = string;
 
+export interface RequestParams {
+  _connectionId: ConnectionId;
+  [key: string]: unknown;
+}
+
 export interface Request {
   method: string;
-  params?: {
-
-    _meta?: {
-      connectionId?: ConnectionId;
-      [key: string]: unknown;
-    };
-    [key: string]: unknown;
-  };
+  params?: RequestParams;
 }
 
 export interface Notification {
@@ -31,7 +29,6 @@ export interface Result {
   _meta?: { [key: string]: unknown };
   [key: string]: unknown;
 }
-
 
 /**
  * A uniquely identifying ID for a request in JSON-RPC.
@@ -61,7 +58,6 @@ export interface JSONRPCResponse {
   id: RequestId;
   result: Result;
 }
-
 
 // Standard JSON-RPC error codes
 export const PARSE_ERROR = -32700;
@@ -97,3 +93,6 @@ export interface JSONRPCError {
  * A response that indicates success but carries no data.
  */
 export type EmptyResult = Result;
+
+export interface oRequest extends JSONRPCRequest {}
+export interface oResponse extends JSONRPCResponse {}

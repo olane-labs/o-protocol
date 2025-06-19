@@ -1,12 +1,9 @@
-import { ConnectionId, JSONRPCRequest } from "../json-rpc";
+import { RequestParams, JSONRPCRequest } from "../json-rpc";
 import { oProtocolMethods } from "../enums";
 
-export interface RouterRequest extends JSONRPCRequest {
+export interface oRouterRequest extends JSONRPCRequest {
   method: oProtocolMethods.ROUTE;
-  params: {
-    _meta: {
-      connectionId?: ConnectionId;
-    };
+  params: RequestParams & {
     address: string;
     payload: {
       [key: string]: unknown;

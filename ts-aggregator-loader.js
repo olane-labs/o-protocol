@@ -62,7 +62,7 @@ function processFile(filePath, baseDir) {
         processFile(resolvedPath, baseDir);
       }
     }
-    aggregatedContent.push(content.replace(/import.*\n/g, ''));
+    aggregatedContent.push(content.replace(/import[\s\S]*?;/g, ''));
     aggregatedContent.push(''); // Empty line for separation
     
   } catch (error) {
