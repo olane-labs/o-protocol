@@ -51,8 +51,6 @@ function processFile(filePath, baseDir) {
   
   try {
     const content = fs.readFileSync(filePath, 'utf8');
-    console.log('Found CONTENT::::')
-    console.log(content);
     
     // Extract imports
     const imports = extractImports(content);
@@ -60,8 +58,6 @@ function processFile(filePath, baseDir) {
     // Process local imports first
     for (const importPath of imports) {
       const resolvedPath = resolveImportPath(importPath, filePath);
-      console.log('Resolved PATH::::')
-      console.log(resolvedPath);
       if (resolvedPath && resolvedPath.startsWith(baseDir) && !resolvedPath.includes('node_modules')) {
         processFile(resolvedPath, baseDir);
       }
