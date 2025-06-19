@@ -1,17 +1,3 @@
-export const LATEST_PROTOCOL_VERSION = '1.0.0';
-
-export enum oProtocolMethods {
-  HANDSHAKE = 'handshake',
-  REGISTER = 'register',
-  ROUTE = 'route',
-}
-export interface oDependency {
-  address: string;
-  version: string;
-  parameters: {
-    [key: string]: unknown;
-  };
-}
 export const JSONRPC_VERSION = "2.0";
 
 export type ConnectionId = string;
@@ -112,57 +98,3 @@ export type EmptyResult = Result;
 
 export interface oRequest extends JSONRPCRequest {}
 export interface oResponse extends JSONRPCResponse {}
-
-export interface oAddress {
-  transports: string[];
-  protocol: string;
-}
-
-
-
-export interface oRouterRequest extends JSONRPCRequest {
-  method: oProtocolMethods.ROUTE;
-  params: RequestParams & {
-    address: string;
-    payload: {
-      [key: string]: unknown;
-    };
-  };
-}
-
-
-
-
-
-export interface oHandshakeRequest extends JSONRPCRequest {
-  method: oProtocolMethods.HANDSHAKE;
-  params: RequestParams & {
-    address: string;
-  };
-}
-
-export interface oHandshakeResponse extends JSONRPCResponse {
-  result: {
-    _connectionId: string;
-    _requestMethod: oProtocolMethods.HANDSHAKE;
-    dependencies: oDependency[];
-    parameters: any;
-  };
-}
-
-
-
-
-export interface oRegistrationParams extends RequestParams {
-  transports: string[];
-  peerId: string;
-  address: string;
-  protocols: string[];
-  ttl?: number;
-}
-
-export interface oRegisterRequest extends oRequest {
-  method: oProtocolMethods.REGISTER;
-  params: oRegistrationParams;
-}
-
