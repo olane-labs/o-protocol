@@ -18,6 +18,10 @@
       }
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/olane-labs/o-protocol.git"
+  },
   "scripts": {
     "check": "npm run check:schema && npm run check:docs",
     "check:schema": "npm run check:schema:ts && npm run check:schema:json",
