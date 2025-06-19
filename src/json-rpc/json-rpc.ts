@@ -9,12 +9,13 @@ export type Cursor = string;
 
 export interface RequestParams {
   _connectionId: ConnectionId;
+  _requestMethod: string;
   [key: string]: unknown;
 }
 
 export interface Request {
   method: string;
-  params?: RequestParams;
+  params: RequestParams;
 }
 
 export interface Notification {
@@ -26,7 +27,8 @@ export interface Notification {
 }
 
 export interface Result {
-  _meta?: { [key: string]: unknown };
+  _connectionId: ConnectionId;
+  _requestMethod: string;
   [key: string]: unknown;
 }
 

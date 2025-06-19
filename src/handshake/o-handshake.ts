@@ -15,6 +15,8 @@ export interface oHandshakeRequest extends JSONRPCRequest {
 
 export interface oHandshakeResponse extends JSONRPCResponse {
   result: {
+    _connectionId: string;
+    _requestMethod: oProtocolMethods.HANDSHAKE;
     dependencies: oDependency[];
     parameters: any;
   };

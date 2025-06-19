@@ -4,7 +4,8 @@ import { oRequest, RequestParams } from "../json-rpc";
 export interface oRegistrationParams extends RequestParams {
   transports: string[];
   peerId: string;
-  protocols?: string[];
+  address: string;
+  protocols: string[];
   ttl?: number;
 }
 
